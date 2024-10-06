@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudY AI - Your Learning Companion</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      width: 100%;
+    }
+    .container h1 {
+      font-size: 3.5rem;
+      margin-bottom: 30px;
+      color: #3a4f7a;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .container p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #5a6d8f;
+      margin-bottom: 40px;
+    }
+    .chatbot-btn {
+      padding: 15px 40px;
+      background: linear-gradient(45deg, #4e73df, #3754c9);
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(78, 115, 223, 0.4);
+    }
+    .chatbot-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(78, 115, 223, 0.6);
+    }
+    .feature-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 50px;
+      gap: 30px;
+    }
+    .feature {
+      width: 350px;
+      background-color: rgba(240, 244, 248, 0.8);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: left;
+      transition: transform 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+    .feature h3 {
+      color: #3a4f7a;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    .feature p {
+      color: #5a6d8f;
+      font-size: 1rem;
+    }
+    .footer {
+      margin-top: 50px;
+      color: #7a8baa;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px;
+      }
+      .container h1 {
+        font-size: 2.5rem;
+      }
+      .feature {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Welcome to StudY AI</h1>
+    <p>StudY AI is your intelligent companion, designed to help students like you throughout your learning journey. Whether you're searching for study materials, looking for resources, or need guidance, StudY AI is here to assist you in every step.</p>
+    
+    <button class="chatbot-btn" onclick="window.location.href='chatbot.html'">Chat with StudY AI</button>
+    
+    <div class="feature-container">
+      <div class="feature">
+        <h3>📚 Find Resources</h3>
+        <p>Get access to a vast collection of study materials tailored to your needs. Just ask StudY AI, and you'll receive the best resources available for your academic journey.</p>
+      </div>
+      <div class="feature">
+        <h3>🕒 24/7 Assistance</h3>
+        <p>Need help at any hour? StudY AI is available 24/7 to guide you through any subject or provide assistance when you're stuck with difficult topics.</p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>© 2024 StudY AI. All Rights Reserved.</p>
+    </div>
+  </div>
+
+</body>
+</html>

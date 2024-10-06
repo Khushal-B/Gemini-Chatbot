@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudY AI Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .chat-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      padding: 30px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      text-align: center;
+      color: #3a4f7a;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      border: 1px solid #e0e0e0;
+      border-radius: 15px;
+      padding: 20px;
+      background-color: #ffffff;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #333;
+      max-height: 500px;
+    }
+
+    .message {
+      margin: 15px 0;
+      padding: 10px 15px;
+      border-radius: 20px;
+      max-width: 80%;
+    }
+
+    .user-message {
+      background-color: #e3f2fd;
+      color: #1565c0;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .study-ai-message {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      align-self: flex-start;
+    }
+
+    .input-area {
+      display: flex;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-input {
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .chat-button {
+      background: linear-gradient(45deg, #4e73df, #3754c9);
+      color: white;
+      padding: 15px 30px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .chat-button:hover {
+      background: linear-gradient(45deg, #3754c9, #2a3f9d);
+    }
+
+    a {
+      color: #1565c0;
+      text-decoration: none;
+      border-bottom: 1px solid #1565c0;
+    }
+
+    a:hover {
+      color: #003c8f;
+      border-bottom: 2px solid #003c8f;
+    }
+
+    @media (max-width: 768px) {
+      .chat-container {
+        width: 95%;
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h1>StudY AI</h1>
+    <div id="chat-box" class="chat-box">
+      <!-- Messages will be displayed here -->
+    </div>
+    <div class="input-area">
+      <input id="chat-input" class="chat-input" type="text" placeholder="Type your message here..." />
+      <button id="chat-button" class="chat-button">Send</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('chat-button').addEventListener('click', async () => {
+      const message = document.getElementById('chat-input').value;
+
+      if (message.trim()) {
+        const chatBox = document.getElementById('chat-box');
+
+        // Display user's message in the chat box
+        chatBox.innerHTML += `<div class="message user-message"><strong>You:</strong> ${message}</div>`;
+
+        // Send the message to the server
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message }),
+        });
+
+        const data = await response.json();
+
+        // Clean the bot's response before displaying it
+        const cleanedResponse = cleanResponse(data.response);
+
+        // Display the bot's cleaned response in the chat box
+        chatBox.innerHTML += `<div class="message study-ai-message"><strong>StudY AI:</strong> ${cleanedResponse}</div>`;
+
+        // Scroll the chat box to the bottom
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Clear the input field
+        document.getElementById('chat-input').value = '';
+      }
+    });
+
+    // Function to clean the response text (removing unwanted characters and replacing markdown with HTML)
+    function cleanResponse(text) {
+      let cleanedText = text.replace(/\n/g, "<br>");
+      cleanedText = cleanedText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+      cleanedText = cleanedText.replace(/## (.*?)<br>/g, "<h2>$1</h2>");
+      cleanedText = cleanedText.replace(/# /g, "");
+      
+      // Convert markdown-style links to HTML anchor tags
+      cleanedText = cleanedText.replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+      
+      return cleanedText;
+    }
+  </script>
+</body>
+</html>
