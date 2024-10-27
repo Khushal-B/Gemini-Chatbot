@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning Pathway - StudY AI</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -30,14 +30,16 @@
             background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
             margin-bottom: 30px;
             text-align: center;
+            backdrop-filter: blur(4px);
         }
 
         .input-section h1 {
-            color: #3a4f7a;
+            color: #2d3748;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .input-box {
@@ -50,15 +52,17 @@
         input[type="text"] {
             flex: 1;
             padding: 15px;
-            border: 2px solid #e1e5ee;
-            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            background: white;
         }
 
         input[type="text"]:focus {
             border-color: #4e73df;
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
         }
 
         button {
@@ -66,24 +70,185 @@
             background: linear-gradient(45deg, #4e73df, #3754c9);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 1rem;
-            transition: transform 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(55, 84, 201, 0.1);
         }
 
         button:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(55, 84, 201, 0.2);
         }
 
         .pathway-container {
             background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
             margin-top: 20px;
             min-height: 400px;
             position: relative;
+            backdrop-filter: blur(4px);
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .pathway-box {
+            width: 340px;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .pathway-box:nth-child(odd) {
+            background: linear-gradient(45deg, #4e73df, #3754c9);
+            color: white;
+            box-shadow: 0 8px 16px rgba(78, 115, 223, 0.2);
+        }
+
+        .pathway-box:nth-child(even) {
+            background: linear-gradient(45deg, #50c3cf, #3897a3);
+            color: white;
+            box-shadow: 0 8px 16px rgba(80, 195, 207, 0.2);
+        }
+
+        .pathway-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .pathway-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .duration {
+            font-size: 0.95rem;
+            margin-top: 8px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .resources {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .resources a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 8px 0;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .resources a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .description-popup {
+            position: absolute;
+            background: rgb(111, 244, 229);
+            color: #2d3748;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-width: 400px;
+            display: none;
+            left: 360px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border: 1px solid #3b8bf3;
+            backdrop-filter: blur(8px);
+        }
+
+        .description-popup::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent rgb(255, 122, 122) transparent transparent;
+        }
+
+        .description-popup.show {
+            opacity: 1;
+            transform: translateY(-50%);
+        }
+
+        .arrow {
+            width: 2px;
+            height: 40px;
+            background: rgba(78, 115, 223, 0.5);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid rgba(78, 115, 223, 0.5);
+        }
+
+        .progress-indicator {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
         }
 
         .loading {
@@ -98,8 +263,8 @@
             content: '';
             width: 50px;
             height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3754c9;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3754c9;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             display: block;
@@ -110,112 +275,31 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* New Flowchart Styles */
-        .flowchart {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            padding: 20px;
-            position: relative;
-        }
-
-        .pathway-box {
-            width: 300px;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .pathway-box:nth-child(odd) {
-            background: linear-gradient(45deg, #4e73df, #3754c9);
-            color: white;
-        }
-
-        .pathway-box:nth-child(even) {
-            background: linear-gradient(45deg, #50c3cf, #3897a3);
-            color: white;
-        }
-
-        .pathway-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .pathway-box h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .description-popup {
-            position: absolute;
-            background: rgb(243, 82, 82);
-            color: #333;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-            max-width: 800px;
-            display: none;
-            left: 320px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        /* Arrow Styles */
-        .arrow {
-            width: 2px;
-            height: 40px;
-            background: #4e73df;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .arrow::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid #4e73df;
-        }
-
-        /* Progress indicator */
-        .progress-indicator {
-            position: absolute;
-            left: -40px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #4CAF50;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
         @media (max-width: 768px) {
             .pathway-box {
-                width: 250px;
+                width: 280px;
             }
             
             .description-popup {
+                position: fixed;
                 left: 50%;
-                top: 100%;
-                transform: translateX(-50%);
-                margin-top: 10px;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                margin: 0;
+                width: 90%;
+                max-width: 350px;
+            }
+
+            .description-popup::before {
+                display: none;
+            }
+
+            .input-box {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
             }
         }
     </style>
@@ -226,7 +310,7 @@
             <h1>Generate Your Learning Pathway</h1>
             <div class="input-box">
                 <input type="text" id="subject-input" placeholder="Enter the subject you want to learn (e.g., 'Python Programming', 'Machine Learning')">
-                <button onclick="generatePathway()">Generate</button>
+                <button onclick="generatePathway()">Generate Pathway</button>
             </div>
         </div>
         
@@ -278,11 +362,9 @@
             flowchart.className = 'flowchart';
 
             pathway.forEach((item, index) => {
-                // Create box
                 const box = createPathwayBox(item, index + 1);
                 flowchart.appendChild(box);
 
-                // Add arrow if not the last item
                 if (index < pathway.length - 1) {
                     const arrow = document.createElement('div');
                     arrow.className = 'arrow';
@@ -297,34 +379,59 @@
             const box = document.createElement('div');
             box.className = 'pathway-box';
             
-            // Add progress indicator
             const indicator = document.createElement('div');
             indicator.className = 'progress-indicator';
             indicator.textContent = index;
             box.appendChild(indicator);
 
-            // Add content
-            box.innerHTML += `<h3>${item.topic}</h3>`;
+            const content = document.createElement('div');
+            content.innerHTML = `
+                <h3>${item.topic}</h3>
+                <div class="duration">📅 ${item.duration}</div>
+            `;
 
-            // Add popup
+            if (item.resources && item.resources.length > 0) {
+                const resourcesDiv = document.createElement('div');
+                resourcesDiv.className = 'resources';
+                item.resources.forEach(resource => {
+                    const link = document.createElement('a');
+                    link.href = resource.url;
+                    link.target = '_blank';
+                    link.textContent = `📚 ${resource.title || resource.url}`;
+                    resourcesDiv.appendChild(link);
+                });
+                content.appendChild(resourcesDiv);
+            }
+
+            box.appendChild(content);
+
             const popup = document.createElement('div');
             popup.className = 'description-popup';
             popup.textContent = item.description;
             box.appendChild(popup);
 
-            // Add hover events
+            let timeout;
             box.addEventListener('mouseenter', () => {
+                clearTimeout(timeout);
+                // Hide all other popups first
+                document.querySelectorAll('.description-popup').forEach(p => {
+                    p.style.display = 'none';
+                    p.classList.remove('show');
+                });
                 popup.style.display = 'block';
+                setTimeout(() => popup.classList.add('show'), 10);
             });
 
             box.addEventListener('mouseleave', () => {
-                popup.style.display = 'none';
+                timeout = setTimeout(() => {
+                    popup.classList.remove('show');
+                    setTimeout(() => popup.style.display = 'none', 300);
+                }, 100);
             });
 
             return box;
         }
 
-        // Handle Enter key press
         document.getElementById('subject-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 generatePathway();
