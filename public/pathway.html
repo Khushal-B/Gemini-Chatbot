@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Pathway - StudY AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-section h1 {
+            color: #3a4f7a;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            display: flex;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e1e5ee;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4e73df;
+        }
+
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #4e73df, #3754c9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .pathway-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            min-height: 400px;
+            position: relative;
+        }
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .loading::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3754c9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* New Flowchart Styles */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .pathway-box {
+            width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .pathway-box:nth-child(odd) {
+            background: linear-gradient(45deg, #4e73df, #3754c9);
+            color: white;
+        }
+
+        .pathway-box:nth-child(even) {
+            background: linear-gradient(45deg, #50c3cf, #3897a3);
+            color: white;
+        }
+
+        .pathway-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .pathway-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .description-popup {
+            position: absolute;
+            background: rgb(243, 82, 82);
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            max-width: 800px;
+            display: none;
+            left: 320px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Arrow Styles */
+        .arrow {
+            width: 2px;
+            height: 40px;
+            background: #4e73df;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #4e73df;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .pathway-box {
+                width: 250px;
+            }
+            
+            .description-popup {
+                left: 50%;
+                top: 100%;
+                transform: translateX(-50%);
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <h1>Generate Your Learning Pathway</h1>
+            <div class="input-box">
+                <input type="text" id="subject-input" placeholder="Enter the subject you want to learn (e.g., 'Python Programming', 'Machine Learning')">
+                <button onclick="generatePathway()">Generate</button>
+            </div>
+        </div>
+        
+        <div class="pathway-container">
+            <div class="loading"></div>
+            <div id="pathway-content"></div>
+        </div>
+    </div>
+
+    <script>
+        async function generatePathway() {
+            const subjectInput = document.getElementById('subject-input');
+            const pathwayContent = document.getElementById('pathway-content');
+            const loading = document.querySelector('.loading');
+            
+            if (!subjectInput.value.trim()) {
+                alert('Please enter a subject');
+                return;
+            }
+
+            loading.style.display = 'block';
+            pathwayContent.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/generate-pathway', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ subject: subjectInput.value })
+                });
+
+                const data = await response.json();
+                loading.style.display = 'none';
+
+                if (data.pathway) {
+                    createFlowchart(data.pathway);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                loading.style.display = 'none';
+                pathwayContent.innerHTML = 'An error occurred. Please try again.';
+            }
+        }
+
+        function createFlowchart(pathway) {
+            const pathwayContent = document.getElementById('pathway-content');
+            const flowchart = document.createElement('div');
+            flowchart.className = 'flowchart';
+
+            pathway.forEach((item, index) => {
+                // Create box
+                const box = createPathwayBox(item, index + 1);
+                flowchart.appendChild(box);
+
+                // Add arrow if not the last item
+                if (index < pathway.length - 1) {
+                    const arrow = document.createElement('div');
+                    arrow.className = 'arrow';
+                    flowchart.appendChild(arrow);
+                }
+            });
+
+            pathwayContent.appendChild(flowchart);
+        }
+
+        function createPathwayBox(item, index) {
+            const box = document.createElement('div');
+            box.className = 'pathway-box';
+            
+            // Add progress indicator
+            const indicator = document.createElement('div');
+            indicator.className = 'progress-indicator';
+            indicator.textContent = index;
+            box.appendChild(indicator);
+
+            // Add content
+            box.innerHTML += `<h3>${item.topic}</h3>`;
+
+            // Add popup
+            const popup = document.createElement('div');
+            popup.className = 'description-popup';
+            popup.textContent = item.description;
+            box.appendChild(popup);
+
+            // Add hover events
+            box.addEventListener('mouseenter', () => {
+                popup.style.display = 'block';
+            });
+
+            box.addEventListener('mouseleave', () => {
+                popup.style.display = 'none';
+            });
+
+            return box;
+        }
+
+        // Handle Enter key press
+        document.getElementById('subject-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generatePathway();
+            }
+        });
+    </script>
+</body>
+</html>
