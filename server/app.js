@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
 import env from 'dotenv';
 
@@ -30,7 +30,7 @@ app.post('/api/chat', async (req, res) => {
 
   // Properly concatenate the strings
   const fullMessage = txt + message;
-  console.log("Full message:", fullMessage);
+  // console.log("Full message:", fullMessage);
 
   try {
     // Prepare the API request to Gemini AI

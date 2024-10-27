@@ -12,9 +12,16 @@
       padding: 0;
       box-sizing: border-box;
     }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: linear-gradient(135deg, #6e8efb, #a777e3, #f77d77, #50c3cf);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
       display: flex;
       justify-content: center;
       align-items: center;
