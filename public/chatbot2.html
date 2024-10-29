@@ -192,7 +192,7 @@
   <script>
     const chatBox = document.getElementById('chat-box');
     const emptyState = chatBox.querySelector('.empty-state');
-
+    
     // Function to scroll to bottom of chat
     function scrollToBottom() {
       // Use requestAnimationFrame to ensure the DOM has updated
@@ -207,12 +207,6 @@
       const message = input.value;
 
       if (message.trim()) {
-        // Check if the message contains "Akshata" (case-insensitive)
-        if (message.toLowerCase().includes("akshata")) {
-          window.location.href = "poision.html";
-          return;
-        }
-
         // Remove empty state if it exists
         if (emptyState && emptyState.parentNode) {
           emptyState.remove();
